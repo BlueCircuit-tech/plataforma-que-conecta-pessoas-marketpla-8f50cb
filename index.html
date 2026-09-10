@@ -1617,6 +1617,425 @@
 })();
 </script>
 
+    <section data-tela="marketplace" class="hidden">
+      <!-- Cabeçalho da tela -->
+      <div class="px-5 pt-4 pb-2">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-display text-xl font-bold text-gray-900 leading-tight">Marketplace</h2>
+            <p class="text-sm text-gray-500 mt-0.5">Suplementos, equipamentos e mais</p>
+          </div>
+          <button onclick="marketplace_abrirCarrinho()" class="relative p-2.5 rounded-xl bg-marca-50 hover:bg-marca-100 transition-colors active:scale-95">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            <span id="cart-contador" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de busca -->
+      <div class="px-5 py-2">
+        <div class="relative">
+          <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="marketplace-busca" placeholder="Buscar produtos..." oninput="marketplace_filtrar()" class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 bg-white text-sm font-body text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition-all">
+          <div id="sugestoes-busca" class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-gray-100 hidden z-20 overflow-hidden"></div>
+        </div>
+      </div>
+
+      <!-- Filtros de categoria -->
+      <div class="px-5 py-2">
+        <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" id="filtros-categoria" style="-webkit-overflow-scrolling:touch;">
+          <button onclick="marketplace_filtrarCategoria('todos')" data-cat="todos" class="marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-marca-700 text-white">Todos</button>
+          <button onclick="marketplace_filtrarCategoria('suplementos')" data-cat="suplementos" class="marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200">Suplementos</button>
+          <button onclick="marketplace_filtrarCategoria('equipamentos')" data-cat="equipamentos" class="marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200">Equipamentos</button>
+          <button onclick="marketplace_filtrarCategoria('vestuario')" data-cat="vestuario" class="marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200">Vestuário</button>
+          <button onclick="marketplace_filtrarCategoria('acessorios')" data-cat="acessorios" class="marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200">Acessórios</button>
+        </div>
+      </div>
+
+      <!-- Banner carrossel de promoções -->
+      <div class="px-5 py-3">
+        <div class="relative overflow-hidden rounded-2xl" id="banner-carrossel">
+          <div class="flex transition-transform duration-500 ease-out" id="banner-slides" style="transform:translateX(0%)">
+            <div class="w-full flex-shrink-0 relative">
+              <div class="h-36 rounded-2xl p-5 flex flex-col justify-between" style="background:linear-gradient(135deg,#14532D,#22C55E)">
+                <div>
+                  <span class="inline-block px-2.5 py-0.5 bg-white/20 rounded-full text-white text-[10px] font-bold uppercase tracking-wide mb-2">Oferta Relâmpago</span>
+                  <h3 class="font-display text-white text-lg font-bold leading-tight">Whey Protein Isolado</h3>
+                  <p class="text-marca-100 text-xs mt-1">Até 40% OFF + frete grátis</p>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-white text-2xl font-bold">R$ 89,90</span>
+                  <button onclick="marketplace_adicionarCarrinho(0)" class="bg-white text-marca-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-100 transition-colors active:scale-95">Ver oferta</button>
+                </div>
+              </div>
+            </div>
+            <div class="w-full flex-shrink-0 relative">
+              <div class="h-36 rounded-2xl p-5 flex flex-col justify-between" style="background:linear-gradient(135deg,#14532D,#166534)">
+                <div>
+                  <span class="inline-block px-2.5 py-0.5 bg-white/20 rounded-full text-white text-[10px] font-bold uppercase tracking-wide mb-2">Frete Grátis</span>
+                  <h3 class="font-display text-white text-lg font-bold leading-tight">Halteres Reforçados</h3>
+                  <p class="text-marca-100 text-xs mt-1">Em compras acima de R$ 150</p>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-white text-2xl font-bold">R$ 149,90</span>
+                  <button onclick="marketplace_adicionarCarrinho(2)" class="bg-white text-marca-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-100 transition-colors active:scale-95">Ver oferta</button>
+                </div>
+              </div>
+            </div>
+            <div class="w-full flex-shrink-0 relative">
+              <div class="h-36 rounded-2xl p-5 flex flex-col justify-between" style="background:linear-gradient(135deg,#166534,#22C55E)">
+                <div>
+                  <span class="inline-block px-2.5 py-0.5 bg-white/20 rounded-full text-white text-[10px] font-bold uppercase tracking-wide mb-2">Novidade</span>
+                  <h3 class="font-display text-white text-lg font-bold leading-tight">Camiseta Dry-Fit Pro</h3>
+                  <p class="text-marca-100 text-xs mt-1">Coleção 2026 — tecnologia térmica</p>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-white text-2xl font-bold">R$ 79,90</span>
+                  <button onclick="marketplace_adicionarCarrinho(3)" class="bg-white text-marca-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-gray-100 transition-colors active:scale-95">Ver oferta</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center gap-1.5 mt-3" id="banner-dots">
+            <span class="w-2 h-2 rounded-full bg-marca-700 transition-all"></span>
+            <span class="w-2 h-2 rounded-full bg-gray-300 transition-all"></span>
+            <span class="w-2 h-2 rounded-full bg-gray-300 transition-all"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid de produtos -->
+      <div class="px-5 pb-24">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-display text-base font-bold text-gray-900">Produtos</h3>
+          <span id="resultados-contagem" class="text-xs text-gray-400">8 resultados</span>
+        </div>
+        <div id="grid-produtos" class="grid grid-cols-2 gap-3"></div>
+        <div id="estado-vazio" class="hidden text-center py-10">
+          <svg class="w-16 h-16 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <p class="text-sm text-gray-400 font-medium">Nenhum produto encontrado</p>
+          <p class="text-xs text-gray-300 mt-1">Tente outra busca ou categoria</p>
+        </div>
+      </div>
+
+      <!-- Botão flutuante do carrinho (mobile) -->
+      <button onclick="marketplace_abrirCarrinho()" id="btn-carrinho-flutuante" class="fixed bottom-20 right-5 w-14 h-14 rounded-full shadow-lg bg-marca-700 hover:bg-marca-800 transition-all active:scale-90 z-30 flex items-center justify-center md:hidden">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span id="cart-contador-float" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+      </button>
+
+      <script>
+      (function(){
+        const produtos = [
+          { id:0, nome:"Whey Protein Isolado 1kg", categoria:"suplementos", preco:149.90, precoOriginal:249.90, imagem:"💪", avaliacao:4.8, reviews:234, descricao:"Whey protein isolado de alta qualidade com 27g de proteína por porção. Baixo teor de gordura e carboidratos. Ideal para recuperação muscular pós-treino. Sabor baunilha.", marca:"NutriForce", peso:"1kg", sku:"NUT-WPI-001" },
+          { id:1, nome:"Creatina Monohidratada 300g", categoria:"suplementos", preco:54.90, precoOriginal:null, imagem:"⚡", avaliacao:4.6, reviews:189, descricao:"Creatina monohidratada pura micronizada para maior absorção. Aumenta força e potência muscular. 100% pura sem aditivos.", marca:"PowerLab", peso:"300g", sku:"PL-CRT-002" },
+          { id:2, nome:"Kit Halteres Reforçados 2x5kg", categoria:"equipamentos", preco:149.90, precoOriginal:199.90, imagem:"🏋️", avaliacao:4.5, reviews:67, descricao:"Par de halteres emborrachados de 5kg cada. Revestimento antiderrapante e confortável. Ideais para exercícios de força em casa.", marca:"FitGear", peso:"2x5kg", sku:"FG-HLT-003" },
+          { id:3, nome:"Camiseta Dry-Fit Pro Masculina", categoria:"vestuario", preco:79.90, precoOriginal:null, imagem:"👕", avaliacao:4.3, reviews:156, descricao:"Camiseta técnica com tecnologia dry-fit que remove o suor. Tecido leve e respirável. Proteção UV 50+.", marca:"ActiveWear", peso:"P/M/G/GG", sku:"AW-CAM-004" },
+          { id:4, nome:"Garrafa Térmica 750ml", categoria:"acessorios", preco:49.90, precoOriginal:69.90, imagem:"🧴", avaliacao:4.7, reviews:312, descricao:"Garrafa térmica de aço inoxidável. Mantém bebidas frias por 24h ou quentes por 12h. Livre de BPA. Design ergonômico.", marca:"HydroMax", peso:"750ml", sku:"HM-GTB-005" },
+          { id:5, nome:"Faixa Elástica Kit 5 Unidades", categoria:"acessorios", preco:34.90, precoOriginal:null, imagem:"🔴", avaliacao:4.4, reviews:203, descricao:"Kit com 5 faixas elásticas de resistência variada (leve a extra-forte). Perfeitas para exercícios de reabilitação e fortalecimento.", marca:"FlexBand", peso:"N/A", sku:"FB-FAI-006" },
+          { id:6, nome:"Pré-Treino Energize 300g", categoria:"suplementos", preco:89.90, precoOriginal:129.90, imagem:"🔥", avaliacao:4.6, reviews:178, descricao:"Pré-treino com cafeína, beta-alanina e L-citrulina. Mais energia e disposição nos treinos. Sabor tropical.", marca:"NutriForce", peso:"300g", sku:"NUT-PRE-007" },
+          { id:7, nome:"Luvas de Treino Academia", categoria:"vestuario", preco:39.90, precoOriginal:null, imagem:"🧤", avaliacao:4.2, reviews:145, descricao:"Luvas de treino com palmilha acolchoada. Protegem as mãos em exercícios com peso. Ajuste por velcro.", marca:"FitGear", peso:"P/M/G", sku:"FG-LUV-008" },
+          { id:8, nome:"Colchonete Yoga Premium 10mm", categoria:"equipamentos", preco:99.90, precoOriginal:null, imagem:"🧘", avaliacao:4.9, reviews:267, descricao:"Colchonete de EVA antiaderente de 10mm. Ideal para yoga, pilates e alongamento. Leve e fácil de transportar.", marca:"ZenFit", peso:"N/A", sku:"ZF-YOG-009" },
+          { id:9, nome:"Multivitamínico VitaminMax 60 caps", categoria:"suplementos", preco:44.90, precoOriginal:null, imagem:"💊", avaliacao:4.1, reviews:98, descricao:"Suplemento vitamínico completo com vitaminas A, C, D, E, complexo B e minerais. 60 cápsulas para um mês.", marca:"VitaPlus", peso:"60 caps", sku:"VP-MVL-010" }
+        ];
+
+        let carrinho = [];
+        let favoritos = new Set();
+        let categoriaAtiva = 'todos';
+        let bannerIndex = 0;
+        let bannerInterval;
+
+        function inicializar(){
+          renderizarProdutos(produtos);
+          iniciarCarrossel();
+        }
+
+        function renderizarProdutos(lista){
+          const grid = document.getElementById('grid-produtos');
+          const vazio = document.getElementById('estado-vazio');
+          const contagem = document.getElementById('resultados-contagem');
+          grid.innerHTML = '';
+          contagem.textContent = lista.length + ' resultado' + (lista.length !== 1 ? 's' : '');
+
+          if(lista.length === 0){
+            grid.classList.add('hidden');
+            vazio.classList.remove('hidden');
+            return;
+          }
+          grid.classList.remove('hidden');
+          vazio.classList.add('hidden');
+
+          lista.forEach((p, idx) => {
+            const temDesconto = p.precoOriginal && p.precoOriginal > p.preco;
+            const descontoPct = temDesconto ? Math.round((1 - p.preco / p.precoOriginal) * 100) : 0;
+            const isFav = favoritos.has(p.id);
+            const card = document.createElement('div');
+            card.className = 'card bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer';
+            card.style.animationDelay = (idx * 0.04) + 's';
+            card.onclick = function(e){
+              if(e.target.closest('.btn-fav') || e.target.closest('.btn-comprar')) return;
+              abrirDetalheProduto(p.id);
+            };
+            card.innerHTML =
+              '<div class="relative p-4 pb-3">' +
+                '<div class="h-28 rounded-xl flex items-center justify-center text-4xl mb-3" style="background:linear-gradient(135deg,'+corGradiente(p.categoria)+')">' + p.imagem + '</div>' +
+                (temDesconto ? '<span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">-' + descontoPct + '%</span>' : '') +
+                '<button onclick="event.stopPropagation();marketplace_toggleFavorito('+p.id+',this)" class="btn-fav absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110 active:scale-90">' +
+                  (isFav
+                    ? '<svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'
+                    : '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>') +
+                '</button>' +
+              '</div>' +
+              '<div class="px-4 pb-4 pt-0">' +
+                '<p class="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-0.5">' + capitalizar(p.categoria) + '</p>' +
+                '<h4 class="text-sm font-display font-bold text-gray-900 leading-tight line-clamp-1">' + p.nome + '</h4>' +
+                '<div class="flex items-center gap-1 mt-1.5">' + estrelasSVG(p.avaliacao) + '<span class="text-[11px] text-gray-400 ml-1">(' + p.reviews + ')</span></div>' +
+                '<div class="flex items-end justify-between mt-2">' +
+                  '<div>' +
+                    '<span class="text-sm font-bold text-gray-900">' + formatarMoeda(p.preco) + '</span>' +
+                    (temDesconto ? '<span class="text-[11px] text-gray-400 line-through ml-1.5">' + formatarMoeda(p.precoOriginal) + '</span>' : '') +
+                  '</div>' +
+                  '<button onclick="event.stopPropagation();marketplace_adicionarCarrinho('+p.id+')" class="btn-comprar w-9 h-9 rounded-xl bg-marca-700 hover:bg-marca-800 text-white flex items-center justify-center transition-all active:scale-90 shadow-sm">' +
+                    '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>' +
+                  '</button>' +
+                '</div>' +
+              '</div>';
+            grid.appendChild(card);
+          });
+        }
+
+        function corGradiente(cat){
+          const cores = { suplementos:'#22C55E,#14532D', equipamentos:'#15803d,#052e16', vestuario:'#4ade80,#166534', acessorios:'#86efac,#14532D' };
+          return cores[cat] || '#22C55E,#14532D';
+        }
+
+        function estrelasSVG(nota){
+          let s = '';
+          for(let i=1;i<=5;i++){
+            const cheia = i <= Math.floor(nota);
+            const meia = i === Math.ceil(nota) && nota % 1 >= 0.3;
+            if(cheia) s += '<svg class="w-3 h-3 text-amber-400 inline" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            else if(meia) s += '<svg class="w-3 h-3 text-amber-400 inline" fill="currentColor" viewBox="0 0 20 20"><defs><linearGradient id="half"><stop offset="50%" stop-color="currentColor"/><stop offset="50%" stop-color="#D1D5DB"/></linearGradient></defs><path fill="url(#half)" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+            else s += '<svg class="w-3 h-3 text-gray-200 inline" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+          }
+          return s;
+        }
+
+        function formatarMoeda(v){
+          return 'R$ ' + v.toFixed(2).replace('.',',');
+        }
+
+        function capitalizar(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+        function marketplace_filtrarCategoria(cat){
+          categoriaAtiva = cat;
+          document.querySelectorAll('.marketplace-filtro-cat').forEach(b => {
+            if(b.dataset.cat === cat){
+              b.className = 'marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-marca-700 text-white';
+            } else {
+              b.className = 'marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200';
+            }
+          });
+          marketplace_filtrar();
+        }
+
+        function marketplace_filtrar(){
+          const termo = document.getElementById('marketplace-busca').value.toLowerCase().trim();
+          let filtrados = produtos;
+          if(categoriaAtiva !== 'todos') filtrados = filtrados.filter(p => p.categoria === categoriaAtiva);
+          if(termo) filtrados = filtrados.filter(p => p.nome.toLowerCase().includes(termo) || p.categoria.includes(termo) || (p.marca && p.marca.toLowerCase().includes(termo)));
+          renderizarProdutos(filtrados);
+          atualizarSugestoes(termo);
+        }
+
+        function atualizarSugestoes(termo){
+          const el = document.getElementById('sugestoes-busca');
+          if(!termo){ el.classList.add('hidden'); return; }
+          const sugs = produtos.filter(p => p.nome.toLowerCase().includes(termo)).slice(0,4);
+          if(sugs.length === 0){ el.classList.add('hidden'); return; }
+          el.innerHTML = sugs.map(s => '<button onclick="document.getElementById(\'marketplace-busca\').value=\''+s.nome+'\';marketplace_filtrar();document.getElementById(\'sugestoes-busca\').classList.add(\'hidden\')" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-marca-50 transition-colors flex items-center gap-3">' +
+            '<span class="text-lg">'+s.imagem+'</span>' +
+            '<div><p class="font-medium">'+s.nome+'</p><p class="text-xs text-gray-400">'+formatarMoeda(s.preco)+'</p></div>' +
+          '</button>').join('');
+          el.classList.remove('hidden');
+        }
+
+        function marketplace_toggleFavorito(id, btn){
+          if(favoritos.has(id)){
+            favoritos.delete(id);
+            toast('Removido dos favoritos','info');
+          } else {
+            favoritos.add(id);
+            toast('Adicionado aos favoritos','ok');
+          }
+          marketplace_filtrar();
+        }
+
+        function marketplace_adicionarCarrinho(id){
+          const p = produtos.find(x => x.id === id);
+          if(!p) return;
+          const existente = carrinho.find(x => x.id === id);
+          if(existente) existente.qtd++;
+          else carrinho.push({ id:p.id, nome:p.nome, preco:p.preco, imagem:p.imagem, qtd:1 });
+          atualizarCarrinhoUI();
+          toast(p.nome + ' adicionado ao carrinho','ok');
+        }
+
+        function atualizarCarrinhoUI(){
+          const total = carrinho.reduce((s,i) => s + i.qtd, 0);
+          const contador = document.getElementById('cart-contador');
+          const float = document.getElementById('cart-contador-float');
+          if(total > 0){
+            contador.textContent = total;
+            contador.classList.remove('hidden');
+            float.textContent = total;
+            float.classList.remove('hidden');
+          } else {
+            contador.classList.add('hidden');
+            float.classList.add('hidden');
+          }
+        }
+
+        function marketplace_removerCarrinho(id){
+          carrinho = carrinho.filter(x => x.id !== id);
+          atualizarCarrinhoUI();
+          marketplace_abrirCarrinho();
+        }
+
+        function marketplace_alterarQtd(id, delta){
+          const item = carrinho.find(x => x.id === id);
+          if(!item) return;
+          item.qtd += delta;
+          if(item.qtd <= 0) carrinho = carrinho.filter(x => x.id !== id);
+          atualizarCarrinhoUI();
+          marketplace_abrirCarrinho();
+        }
+
+        function marketplace_abrirCarrinho(){
+          if(carrinho.length === 0){
+            abrirModal('<div class="text-center py-8"><div class="text-5xl mb-3">🛒</div><p class="text-gray-500 text-sm font-medium">Seu carrinho está vazio</p><p class="text-gray-400 text-xs mt-1">Adicione produtos para continuar</p></div>', 'Carrinho');
+            return;
+          }
+          const total = carrinho.reduce((s,i) => s + i.preco * i.qtd, 0);
+          const itens = carrinho.map(i => '<div class="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">' +
+            '<div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:linear-gradient(135deg,'+corGradiente(produtos.find(p=>p.id===i.id)?.categoria||'suplementos')+')">' + i.imagem + '</div>' +
+            '<div class="flex-1 min-w-0"><p class="text-sm font-display font-bold text-gray-900 truncate">' + i.nome + '</p><p class="text-xs text-gray-400">' + formatarMoeda(i.preco) + ' cada</p></div>' +
+            '<div class="flex items-center gap-2">' +
+              '<button onclick="marketplace_alterarQtd('+i.id+',-1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 text-sm font-bold transition-colors active:scale-90">−</button>' +
+              '<span class="text-sm font-bold text-gray-900 w-5 text-center">' + i.qtd + '</span>' +
+              '<button onclick="marketplace_alterarQtd('+i.id+',1)" class="w-7 h-7 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 text-sm font-bold transition-colors active:scale-90">+</button>' +
+            '</div>' +
+            '<div class="text-right"><p class="text-sm font-bold text-gray-900">' + formatarMoeda(i.preco * i.qtd) + '</p><button onclick="marketplace_removerCarrinho('+i.id+')" class="text-[11px] text-red-400 hover:text-red-600 mt-0.5">Remover</button></div>' +
+          '</div>').join('');
+
+          abrirModal(
+            '<div class="mb-4">' + itens + '</div>' +
+            '<div class="pt-3 border-t border-gray-100 flex items-center justify-between mb-4">' +
+              '<span class="text-sm text-gray-500">Total (' + carrinho.reduce((s,i)=>s+i.qtd,0) + ' itens)</span>' +
+              '<span class="text-xl font-display font-bold text-gray-900">' + formatarMoeda(total) + '</span>' +
+            '</div>' +
+            '<button onclick="marketplace_finalizarCompra()" class="w-full py-3.5 bg-marca-700 hover:bg-marca-800 text-white rounded-xl font-bold text-sm transition-all active:scale-[0.98] shadow-lg shadow-marca-700/20">Finalizar Compra</button>',
+            'Carrinho (' + carrinho.reduce((s,i)=>s+i.qtd,0) + ')'
+          );
+        }
+
+        function marketplace_finalizarCompra(){
+          fecharModal();
+          carrinho = [];
+          atualizarCarrinhoUI();
+          toast('Compra finalizada com sucesso! 🎉','ok');
+        }
+
+        function abrirDetalheProduto(id){
+          const p = produtos.find(x => x.id === id);
+          if(!p) return;
+          const temDesconto = p.precoOriginal && p.precoOriginal > p.preco;
+          const descontoPct = temDesconto ? Math.round((1 - p.preco / p.precoOriginal) * 100) : 0;
+          const isFav = favoritos.has(p.id);
+
+          const detalhe =
+            '<div class="space-y-4">' +
+              '<div class="h-44 rounded-2xl flex items-center justify-center text-6xl" style="background:linear-gradient(135deg,'+corGradiente(p.categoria)+')">' + p.imagem + '</div>' +
+              '<div class="flex items-start justify-between gap-3">' +
+                '<div><span class="text-[11px] text-gray-400 uppercase tracking-wider font-medium">' + capitalizar(p.categoria) + '</span><h3 class="font-display text-lg font-bold text-gray-900 mt-0.5">' + p.nome + '</h3></div>' +
+                '<button onclick="marketplace_toggleFavorito('+p.id+',this);abrirDetalheProduto('+p.id+')" class="flex-shrink-0 w-10 h-10 rounded-full border ' + (isFav ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200') + ' flex items-center justify-center transition-all">' +
+                  (isFav ? '<svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' : '<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>') +
+                '</button>' +
+              '</div>' +
+              '<div class="flex items-center gap-2">' + estrelasSVG(p.avaliacao) + '<span class="text-sm font-medium text-gray-700">' + p.avaliacao + '</span><span class="text-xs text-gray-400">(' + p.reviews + ' avaliações)</span></div>' +
+              '<p class="text-sm text-gray-600 leading-relaxed">' + p.descricao + '</p>' +
+              '<div class="grid grid-cols-3 gap-3">' +
+                '<div class="bg-gray-50 rounded-xl p-3 text-center"><p class="text-[10px] text-gray-400 uppercase tracking-wider">Marca</p><p class="text-sm font-bold text-gray-800 mt-0.5">' + p.marca + '</p></div>' +
+                '<div class="bg-gray-50 rounded-xl p-3 text-center"><p class="text-[10px] text-gray-400 uppercase tracking-wider">Peso</p><p class="text-sm font-bold text-gray-800 mt-0.5">' + p.peso + '</p></div>' +
+                '<div class="bg-gray-50 rounded-xl p-3 text-center"><p class="text-[10px] text-gray-400 uppercase tracking-wider">SKU</p><p class="text-xs font-bold text-gray-800 mt-0.5">' + p.sku + '</p></div>' +
+              '</div>' +
+              '<div class="flex items-center gap-3 pt-2">' +
+                '<div><span class="text-2xl font-display font-bold text-gray-900">' + formatarMoeda(p.preco) + '</span>' + (temDesconto ? '<span class="text-sm text-gray-400 line-through ml-2">' + formatarMoeda(p.precoOriginal) + '</span><span class="ml-2 text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">-' + descontoPct + '%</span>' : '') + '</div>' +
+              '</div>' +
+              '<button onclick="marketplace_adicionarCarrinho('+p.id+');fecharModal()" class="w-full py-3.5 bg-marca-700 hover:bg-marca-800 text-white rounded-xl font-bold text-sm transition-all active:scale-[0.98] shadow-lg shadow-marca-700/20">Adicionar ao Carrinho</button>' +
+            '</div>';
+          abrirModal(detalhe, p.nome);
+        }
+
+        function iniciarCarrossel(){
+          const slides = document.getElementById('banner-slides');
+          const dots = document.getElementById('banner-dots');
+          if(!slides) return;
+          bannerInterval = setInterval(()=>{
+            bannerIndex = (bannerIndex + 1) % 3;
+            slides.style.transform = 'translateX(-' + (bannerIndex * 100) + '%)';
+            dots.querySelectorAll('span').forEach((d,i) => {
+              d.className = 'w-2 h-2 rounded-full transition-all ' + (i === bannerIndex ? 'bg-marca-700 w-5' : 'bg-gray-300');
+            });
+          }, 4000);
+
+          let startX = 0;
+          const container = document.getElementById('banner-carrossel');
+          container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+          container.addEventListener('touchend', e => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if(Math.abs(diff) > 50){
+              bannerIndex = diff > 0 ? Math.min(bannerIndex + 1, 2) : Math.max(bannerIndex - 1, 0);
+              slides.style.transform = 'translateX(-' + (bannerIndex * 100) + '%)';
+              dots.querySelectorAll('span').forEach((d,i) => {
+                d.className = 'w-2 h-2 rounded-full transition-all ' + (i === bannerIndex ? 'bg-marca-700 w-5' : 'bg-gray-300');
+              });
+            }
+          });
+        }
+
+        document.addEventListener('click', function(e){
+          const busca = document.getElementById('marketplace-busca');
+          const sugs = document.getElementById('sugestoes-busca');
+          if(busca && sugs && !busca.contains(e.target) && !sugs.contains(e.target)) sugs.classList.add('hidden');
+        });
+
+        if(typeof mostrarTela !== 'undefined'){
+          const orig = mostrarTela;
+          mostrarTela = function(id){
+            if(id === 'marketplace'){
+              categoriaAtiva = 'todos';
+              const busca = document.getElementById('marketplace-busca');
+              if(busca) busca.value = '';
+              document.querySelectorAll('.marketplace-filtro-cat').forEach(b => {
+                if(b.dataset.cat === 'todos') b.className = 'marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-marca-700 text-white';
+                else b.className = 'marketplace-filtro-cat flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all active:scale-95 bg-gray-100 text-gray-600 hover:bg-gray-200';
+              });
+              renderizarProdutos(produtos);
+            }
+            orig(id);
+          };
+        }
+
+        if(document.readyState === 'loading'){
+          document.addEventListener('DOMContentLoaded', inicializar);
+        } else {
+          inicializar();
+        }
+      })();
+      </script>
+    </section>
+
     <!-- TELAS -->
       </main>
 
