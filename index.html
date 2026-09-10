@@ -134,7 +134,243 @@
 
       <!-- Área das Telas -->
       <main class="flex-1 overflow-y-auto overflow-x-hidden relative" id="app-main">
-        <!-- TELAS -->
+        <section data-tela="painel-inicial" class="hidden">
+    <div class="px-5 pt-2 pb-24 fade-in">
+        <!-- Cabeçalho -->
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex-1 mr-3">
+                <div class="relative">
+                    <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input id="pi-busca" type="text" placeholder="Buscar treinos, produtos, médicos..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-body text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all" oninput="painel_inicial_buscar(this.value)">
+                </div>
+            </div>
+            <button onclick="painel_inicial_notificacoes()" class="relative p-2.5 bg-white rounded-xl border border-gray-200 active:scale-95 transition-all">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                <span id="pi-badge-notif" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+            </button>
+        </div>
+
+        <!-- Saudação -->
+        <div class="mb-6">
+            <p class="text-sm text-gray-500 font-body">Bom dia,</p>
+            <h1 class="text-2xl font-display font-bold text-gray-900">Carlos Silva</h1>
+            <p class="text-sm text-gray-500 font-body mt-0.5">Vamos manter o foco nos seus objetivos 💪</p>
+        </div>
+
+        <!-- Cards de Resumo -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <div class="card bg-white rounded-2xl p-3 text-center cursor-pointer active:scale-95 transition-all" onclick="mostrarTela('meus-treinos')">
+                <div class="w-10 h-10 mx-auto mb-2 bg-marca-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <p class="text-xl font-display font-bold text-gray-900">4</p>
+                <p class="text-[11px] text-gray-500 font-body">Treinos feitos</p>
+                <span class="inline-block mt-1 text-[10px] text-marca-700 bg-marca-50 px-1.5 py-0.5 rounded-full font-medium">+2 esta semana</span>
+            </div>
+            <div class="card bg-white rounded-2xl p-3 text-center cursor-pointer active:scale-95 transition-all">
+                <div class="w-10 h-10 mx-auto mb-2 bg-orange-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+                </div>
+                <p class="text-xl font-display font-bold text-gray-900">1.840</p>
+                <p class="text-[11px] text-gray-500 font-body">Calorias</p>
+                <span class="inline-block mt-1 text-[10px] text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded-full font-medium">+320 hoje</span>
+            </div>
+            <div class="card bg-white rounded-2xl p-3 text-center cursor-pointer active:scale-95 transition-all" onclick="mostrarTela('telemedicina')">
+                <div class="w-10 h-10 mx-auto mb-2 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <p class="text-xl font-display font-bold text-gray-900">2</p>
+                <p class="text-[11px] text-gray-500 font-body">Consultas</p>
+                <span class="inline-block mt-1 text-[10px] text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full font-medium">Próxima: amanhã</span>
+            </div>
+        </div>
+
+        <!-- Gráfico Semanal -->
+        <div class="bg-white rounded-2xl p-4 mb-6 card">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-display font-semibold text-gray-800">Progresso Semanal</h3>
+                <span class="text-xs text-gray-500 font-body">Últimos 7 dias</span>
+            </div>
+            <svg id="pi-grafico" viewBox="0 0 320 120" class="w-full h-28">
+                <defs>
+                    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#22C55E" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="#22C55E" stop-opacity="0.02"/>
+                    </linearGradient>
+                </defs>
+                <polyline points="20,95 63,78 106,62 149,70 192,45 235,38 278,52 300,35" fill="none" stroke="#14532D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="20,95 63,78 106,62 149,70 192,45 235,38 278,52 300,35 300,120 20,120" fill="url(#areaGrad)"/>
+                <circle cx="20" cy="95" r="3" fill="#14532D"/><circle cx="63" cy="78" r="3" fill="#14532D"/><circle cx="106" cy="62" r="3" fill="#22C55E"/><circle cx="149" cy="70" r="3" fill="#14532D"/><circle cx="192" cy="45" r="3" fill="#22C55E"/><circle cx="235" cy="38" r="3" fill="#22C55E"/><circle cx="278" cy="52" r="3" fill="#14532D"/><circle cx="300" cy="35" r="4" fill="#22C55E" stroke="#fff" stroke-width="2"/>
+                <text x="20" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Seg</text>
+                <text x="63" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Ter</text>
+                <text x="106" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Qua</text>
+                <text x="149" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Qui</text>
+                <text x="192" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Sex</text>
+                <text x="235" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Sáb</text>
+                <text x="278" y="112" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-family="Inter, sans-serif">Dom</text>
+            </svg>
+            <div class="flex items-center justify-center gap-4 mt-2">
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-marca-700"></span><span class="text-[11px] text-gray-500 font-body">Treinos</span></div>
+                <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-marca-500"></span><span class="text-[11px] text-gray-500 font-body">Meta diária</span></div>
+            </div>
+        </div>
+
+        <!-- Ações Rápidas -->
+        <h3 class="text-sm font-display font-semibold text-gray-800 mb-3">Ações Rápidas</h3>
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <button onclick="mostrarTela('detalhe-do-treino')" class="card bg-marca-700 rounded-2xl p-4 text-center active:scale-95 transition-all cursor-pointer">
+                <div class="w-11 h-11 mx-auto mb-2 bg-white/20 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <p class="text-xs font-display font-semibold text-white">Gerar Treino</p>
+            </button>
+            <button onclick="mostrarTela('telemedicina')" class="card bg-white border border-gray-200 rounded-2xl p-4 text-center active:scale-95 transition-all cursor-pointer">
+                <div class="w-11 h-11 mx-auto mb-2 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </div>
+                <p class="text-xs font-display font-semibold text-gray-700">Agendar Consulta</p>
+            </button>
+            <button onclick="mostrarTela('marketplace')" class="card bg-white border border-gray-200 rounded-2xl p-4 text-center active:scale-95 transition-all cursor-pointer">
+                <div class="w-11 h-11 mx-auto mb-2 bg-marca-50 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                </div>
+                <p class="text-xs font-display font-semibold text-gray-700">Marketplace</p>
+            </button>
+        </div>
+
+        <!-- Dica Diária -->
+        <div class="bg-gradient-to-br from-marca-50 to-white rounded-2xl p-4 mb-6 border border-marca-100">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-marca-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                </div>
+                <div>
+                    <p class="text-xs font-display font-semibold text-marca-800 mb-1">Dica do dia — Perda de peso</p>
+                    <p class="text-xs text-gray-600 font-body leading-relaxed">Beba um copo de água 30 minutos antes das refeições. Estudos mostram que isso pode reduzir a ingestão calórica em até 13%.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Próxima Consulta -->
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-display font-semibold text-gray-800">Próxima Consulta</h3>
+            <button onclick="mostrarTela('telemedicina')" class="text-xs text-marca-700 font-medium font-body hover:underline">Ver todas</button>
+        </div>
+        <div class="bg-white rounded-2xl p-4 mb-6 card border border-gray-100 cursor-pointer" onclick="abrirModal(painel_inicial_detalhe_consulta(), 'Consulta Agendada')">
+            <div class="flex items-center gap-4">
+                <div class="relative flex-shrink-0">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-display font-bold">DR</div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-0.5">
+                        <p class="text-sm font-display font-semibold text-gray-900 truncate">Dr. Ricardo Mendes</p>
+                        <span class="badge bg-marca-100 text-marca-800 text-[10px] px-2 py-0.5 rounded-full font-medium">Nutricionista</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-body">Avaliação nutricional mensal</p>
+                    <p class="text-xs text-marca-700 font-body font-medium mt-1">📅 Amanhã, 14:30 • Online</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <span class="badge bg-blue-50 text-blue-700 text-[10px] px-2 py-1 rounded-lg font-medium">Confirmado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produtos Sugeridos -->
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-display font-semibold text-gray-800">Sugeridos para você</h3>
+            <button onclick="mostrarTela('marketplace')" class="text-xs text-marca-700 font-medium font-body hover:underline">Ver loja</button>
+        </div>
+        <div id="pi-lista-sugeridos" class="space-y-3 mb-4">
+            <div class="bg-white rounded-2xl p-3 card border border-gray-100 cursor-pointer active:scale-[0.98] transition-all" onclick="mostrarTela('detalhe-do-produto')">
+                <div class="flex items-center gap-3">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-200 to-red-300 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-display font-semibold text-gray-900 truncate">Whey Protein 1kg</p>
+                        <p class="text-xs text-gray-500 font-body">Suplemento alimentar</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-sm font-display font-bold text-marca-700">R$ 89,90</span>
+                            <span class="text-[10px] text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded-full font-medium">-15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-3 card border border-gray-100 cursor-pointer active:scale-[0.98] transition-all" onclick="mostrarTela('detalhe-do-produto')">
+                <div class="flex items-center gap-3">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-200 to-indigo-300 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-display font-semibold text-gray-900 truncate">Tapete de Yoga Premium</p>
+                        <p class="text-xs text-gray-500 font-body">Acessórios • Antiderrapante</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-sm font-display font-bold text-marca-700">R$ 129,90</span>
+                            <span class="badge bg-marca-100 text-marca-800 text-[10px] px-2 py-0.5 rounded-full font-medium">Mais vendido</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-3 card border border-gray-100 cursor-pointer active:scale-[0.98] transition-all" onclick="mostrarTela('detalhe-do-produto')">
+                <div class="flex items-center gap-3">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-teal-200 to-cyan-300 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-display font-semibold text-gray-900 truncate">Garrafa Térmica 1L</p>
+                        <p class="text-xs text-gray-500 font-body">Hidratação • Aço inox</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-sm font-display font-bold text-marca-700">R$ 59,90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function painel_inicial_buscar(termo) {
+        const container = document.getElementById('pi-lista-sugeridos');
+        if (!container) return;
+        const items = container.querySelectorAll('.card');
+        const t = termo.toLowerCase().trim();
+        let visiveis = 0;
+        items.forEach(function(item) {
+            const texto = item.textContent.toLowerCase();
+            if (t === '' || texto.includes(t)) {
+                item.style.display = '';
+                visiveis++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        if (t !== '' && visiveis === 0) {
+            container.innerHTML = '<div class="text-center py-8"><svg class="w-12 h-12 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p class="text-sm text-gray-400 font-body">Nenhum resultado para "' + termo + '"</p></div>';
+        } else if (t === '') {
+            location.reload();
+        }
+    }
+
+    function painel_inicial_notificacoes() {
+        const badge = document.getElementById('pi-badge-notif');
+        if (badge) {
+            const count = parseInt(badge.textContent) || 0;
+            if (count > 0) {
+                badge.textContent = '0';
+                badge.classList.add('hidden');
+                abrirModal('<div class="space-y-3"><div class="flex items-start gap-3 p-3 bg-marca-50 rounded-xl"><div class="w-8 h-8 bg-marca-700 rounded-lg flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><div><p class="text-sm font-body text-gray-800 font-medium">Treino concluído!</p><p class="text-xs text-gray-500 font-body">Você completou o Treino A — Pernas</p><p class="text-[10px] text-gray-400 font-body mt-0.5">Há 2 horas</p></div></div><div class="flex items-start gap-3 p-3 bg-blue-50 rounded-xl"><div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div><div><p class="text-sm font-body text-gray-800 font-medium">Consulta confirmada</p><p class="text-xs text-gray-500 font-body">Dr. Ricardo Mendes — Amanhã às 14:30</p><p class="text-[10px] text-gray-400 font-body mt-0.5">Há 5 horas</p></div></div><div class="flex items-start gap-3 p-3 bg-orange-50 rounded-xl"><div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div><p class="text-sm font-body text-gray-800 font-medium">Lembrete de hidratação</p><p class="text-xs text-gray-500 font-body">Beba pelo menos 2L de água hoje</p><p class="text-[10px] text-gray-400 font-body mt-0.5">Hoje, 10:00</p></div></div></div>', 'Notificações');
+                toast('Notificações marcadas como lidas', 'ok');
+            }
+        }
+    }
+
+    function painel_inicial_detalhe_consulta() {
+        return '<div class="space-y-4"><div class="flex items-center gap-4"><div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xl font-display font-bold">DR</div><div><p class="font-display font-semibold text-gray-900">Dr. Ricardo Mendes</p><span class="badge bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded-full font-medium">Nutricionista</span><p class="text-xs text-gray-500 font-body mt-1">CRM: 54321-SP</p></div></div><div class="bg-gray-50 rounded-xl p-3 space-y-2"><div class="flex items-center gap-2"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="text-sm font-body text-gray-700">Amanhã, 25 de Junho</span></div><div class="flex items-center gap-2"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="text-sm font-body text-gray-700">14:30 — 15:00</span></div><div class="flex items-center gap-2"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg><span class="text-sm font-body text-gray-700">Consulta online (vídeo)</span></div></div><div class="bg-marca-50 border border-marca-100 rounded-xl p-3"><p class="text-xs font-body text-marca-800 font-medium">Tipo de atendimento</p><p class="text-sm font-body text-gray-700 mt-1">Avaliação nutricional mensal</p></div><div class="flex gap-2"><button onclick="fecharModal(); toast('Link da consulta enviado por e-mail', 'ok')" class="flex-1 btn bg-marca-700 text-white py-2.5 rounded-xl text-sm font-display font-semibold active:scale-95 transition-all">Entrar na consulta</button><button onclick="fecharModal(); toast('Consulta cancelada', 'info')" class="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl text-sm font-display font-semibold active:scale-95 transition-all">Cancelar</button></div></div>';
+    }
+    </script>
+</section>
+
+    <!-- TELAS -->
       </main>
 
       <!-- Navegação Inferior -->
