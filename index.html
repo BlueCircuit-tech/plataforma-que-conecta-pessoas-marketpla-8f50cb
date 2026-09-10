@@ -721,6 +721,353 @@
   </script>
 </section>
 
+    <section data-tela="detalhe-do-treino" class="hidden">
+      <div id="detalhe-do-treino-container" class="fade-in flex flex-col h-full">
+        <!-- Header -->
+        <div class="px-5 pt-4 pb-3">
+          <div class="flex items-center justify-between mb-3">
+            <button onclick="mostrarTela('meus-treinos')" class="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center active:scale-95 transition-all shadow-sm">
+              <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="text-center">
+              <h1 class="font-display text-lg font-bold text-gray-900">Treino de Força</h1>
+              <p class="text-xs text-gray-500">Dia 3 de 5 • Semana 2</p>
+            </div>
+            <button onclick="abrirChatPersonal()" class="w-10 h-10 rounded-xl bg-marca-50 border border-marca-200 flex items-center justify-center active:scale-95 transition-all shadow-sm">
+              <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </button>
+          </div>
+          <!-- Progress Bar -->
+          <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div id="detalhe-treino-progress" class="h-full bg-gradient-to-r from-marca-700 to-green-400 rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+          <div class="flex justify-between mt-1">
+            <span id="detalhe-treino-progress-text" class="text-xs text-gray-500">Exercício 1 de 8</span>
+            <span id="detalhe-treino-progress-pct" class="text-xs font-semibold text-marca-700">0%</span>
+          </div>
+        </div>
+
+        <!-- Exercise Card -->
+        <div id="detalhe-treino-exercise-area" class="flex-1 overflow-y-auto px-5 pb-4">
+          <div id="detalhe-treino-exercise-card" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <!-- Exercise Visual -->
+            <div id="detalhe-treino-visual" class="relative w-full h-52 bg-gradient-to-br from-marca-800 via-marca-700 to-green-500 flex items-center justify-center">
+              <div class="absolute inset-0 opacity-10">
+                <svg class="w-full h-full" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="white" stroke-width="0.5"/><circle cx="100" cy="100" r="60" fill="none" stroke="white" stroke-width="0.5"/><circle cx="100" cy="100" r="40" fill="none" stroke="white" stroke-width="0.5"/></svg>
+              </div>
+              <div class="text-center z-10">
+                <div id="detalhe-treino-icon-area" class="w-24 h-24 mx-auto mb-2 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h2v8H4zM10 8h2v8h-2zM16 8h2v8h-2zM20 8h2v8h-2zM4 16h2M16 16h2"/></svg>
+                </div>
+                <p id="detalhe-treino-visual-label" class="text-white/80 text-sm font-medium">Execução correta</p>
+              </div>
+              <div class="absolute top-3 right-3">
+                <span id="detalhe-treino-set-badge" class="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full border border-white/20">Série 1/3</span>
+              </div>
+            </div>
+
+            <!-- Exercise Info -->
+            <div class="p-5">
+              <h2 id="detalhe-treino-exercise-name" class="font-display text-xl font-bold text-gray-900 mb-1">Agachamento Livre</h2>
+              <p id="detalhe-treino-exercise-muscle" class="text-sm text-gray-500 mb-4">Quadríceps • Glúteos • Core</p>
+
+              <!-- Params Grid -->
+              <div class="grid grid-cols-3 gap-3 mb-5">
+                <div class="bg-marca-50 rounded-xl p-3 text-center border border-marca-100">
+                  <svg class="w-5 h-5 text-marca-700 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                  <p id="detalhe-treino-sets" class="text-lg font-bold text-gray-900">3</p>
+                  <p class="text-xs text-gray-500">Séries</p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-3 text-center border border-blue-100">
+                  <svg class="w-5 h-5 text-blue-600 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <p id="detalhe-treino-reps" class="text-lg font-bold text-gray-900">12</p>
+                  <p class="text-xs text-gray-500">Repetições</p>
+                </div>
+                <div class="bg-orange-50 rounded-xl p-3 text-center border border-orange-100">
+                  <svg class="w-5 h-5 text-orange-500 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <p id="detalhe-treino-rest" class="text-lg font-bold text-gray-900">60s</p>
+                  <p class="text-xs text-gray-500">Descanso</p>
+                </div>
+              </div>
+
+              <!-- Timer Section (for timed exercises) -->
+              <div id="detalhe-treino-timer-area" class="hidden mb-5">
+                <div class="bg-gray-900 rounded-xl p-4 text-center">
+                  <p class="text-xs text-gray-400 mb-2 uppercase tracking-wider font-semibold">Cronômetro</p>
+                  <p id="detalhe-treino-timer-display" class="text-4xl font-bold text-white font-mono tracking-wider">00:00</p>
+                  <div class="flex gap-2 mt-3 justify-center">
+                    <button id="detalhe-treino-btn-start" onclick="detalhe_do_treino_startTimer()" class="px-6 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold active:scale-95 transition-all hover:bg-green-600">Iniciar</button>
+                    <button id="detalhe-treino-btn-pause" onclick="detalhe_do_treino_pauseTimer()" class="hidden px-6 py-2 bg-yellow-500 text-white rounded-lg text-sm font-semibold active:scale-95 transition-all hover:bg-yellow-600">Pausar</button>
+                    <button id="detalhe-treino-btn-reset" onclick="detalhe_do_treino_resetTimer()" class="px-6 py-2 bg-gray-700 text-white rounded-lg text-sm font-semibold active:scale-95 transition-all hover:bg-gray-600">Reset</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Checkboxes -->
+              <div class="space-y-2 mb-5">
+                <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors" onclick="detalhe_do_treino_toggleCheck('completed')">
+                  <div id="detalhe-treino-check-completed" class="w-6 h-6 rounded-lg border-2 border-gray-300 flex items-center justify-center transition-all">
+                    <svg class="w-4 h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <span class="text-sm text-gray-700 font-medium">Série concluída</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors" onclick="detalhe_do_treino_toggleCheck('difficult')">
+                  <div id="detalhe-treino-check-difficult" class="w-6 h-6 rounded-lg border-2 border-gray-300 flex items-center justify-center transition-all">
+                    <svg class="w-4 h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <span class="text-sm text-gray-700 font-medium">Foi difícil</span>
+                </label>
+              </div>
+
+              <!-- Tips -->
+              <div class="bg-marca-50 rounded-xl p-4 border border-marca-100 mb-4">
+                <div class="flex gap-2">
+                  <svg class="w-5 h-5 text-marca-700 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div>
+                    <p class="text-sm font-semibold text-marca-800 mb-1">Dica do Personal</p>
+                    <p id="detalhe-treino-tip" class="text-sm text-marca-700">Mantenha o core ativado durante todo o movimento. Desça até que as coxas fiquem paralelas ao chão.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="px-5 pb-6 pt-2 bg-white border-t border-gray-100">
+          <div class="flex gap-3">
+            <button onclick="detalhe_do_treino_prevExercise()" id="detalhe-treino-btn-prev" class="flex-1 py-3.5 rounded-xl border-2 border-gray-200 text-gray-700 font-semibold text-sm active:scale-95 transition-all hover:border-gray-300 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              Anterior
+            </button>
+            <button onclick="detalhe_do_treino_nextExercise()" id="detalhe-treino-btn-next" class="flex-[2] py-3.5 rounded-xl bg-marca-700 text-white font-semibold text-sm active:scale-95 transition-all hover:bg-marca-800 flex items-center justify-center gap-2 shadow-lg shadow-marca-700/20">
+              <span id="detalhe-treino-next-label">Próximo</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completion Modal -->
+      <div id="detalhe-treino-completion-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-sm p-6 slide-up">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h2 class="font-display text-2xl font-bold text-gray-900 text-center mb-1">Treino Concluído!</h2>
+          <p class="text-sm text-gray-500 text-center mb-6">Parabéns, você completou o treino de hoje.</p>
+
+          <div class="grid grid-cols-3 gap-3 mb-6">
+            <div class="bg-marca-50 rounded-xl p-3 text-center border border-marca-100">
+              <svg class="w-5 h-5 text-marca-700 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <p id="detalhe-treino-total-time" class="text-lg font-bold text-gray-900">32:15</p>
+              <p class="text-xs text-gray-500">Tempo Total</p>
+            </div>
+            <div class="bg-orange-50 rounded-xl p-3 text-center border border-orange-100">
+              <svg class="w-5 h-5 text-orange-500 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+              <p id="detalhe-treino-total-cal" class="text-lg font-bold text-gray-900">486</p>
+              <p class="text-xs text-gray-500">Calorias</p>
+            </div>
+            <div class="bg-blue-50 rounded-xl p-3 text-center border border-blue-100">
+              <svg class="w-5 h-5 text-blue-600 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+              <p id="detalhe-treino-total-series" class="text-lg font-bold text-gray-900">9/9</p>
+              <p class="text-xs text-gray-500">Séries</p>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="bg-gradient-to-r from-marca-50 to-green-50 rounded-xl p-4 border border-marca-100 mb-5">
+            <p class="text-sm font-semibold text-marca-800 mb-2">🏆 Conquistas Desbloqueadas</p>
+            <div class="flex gap-2">
+              <span class="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                <span>🔥</span> 3 dias seguidos
+              </span>
+              <span class="inline-flex items-center gap-1 bg-marca-100 text-marca-800 text-xs font-semibold px-2.5 py-1 rounded-full">
+                <span>💪</span> Força total
+              </span>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button onclick="detalhe_do_treino_share()" class="flex-1 py-3.5 rounded-xl border-2 border-marca-200 text-marca-700 font-semibold text-sm active:scale-95 transition-all hover:bg-marca-50 flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.5 9 12c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5c0 .5.114.938.316 1.342m0 0a2.5 2.5 0 004.368 0m0 0A2.5 2.5 0 1116 11.5a2.5 2.5 0 01-2.316 1.342m0 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Compartilhar
+            </button>
+            <button onclick="detalhe_do_treino_finish()" class="flex-[2] py-3.5 rounded-xl bg-marca-700 text-white font-semibold text-sm active:scale-95 transition-all hover:bg-marca-800 shadow-lg shadow-marca-700/20">
+              Voltar ao Início
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const detalhe_do_treino_exercises = [
+          { name: 'Agachamento Livre', muscle: 'Quadríceps • Glúteos • Core', sets: 3, reps: 12, rest: 60, tip: 'Mantenha o core ativado durante todo o movimento. Desça até que as coxas fiquem paralelas ao chão.', timed: false, icon: '🦵' },
+          { name: 'Supino Reto', muscle: 'Peitoral • Tríceps • Ombro', sets: 4, reps: 10, rest: 90, tip: 'Controle a descida da barra. Não deixe os cotovelos abrirem muito para evitar lesões.', timed: false, icon: '💪' },
+          { name: 'Prancha Frontal', muscle: 'Core • Abdômen', sets: 3, reps: 0, rest: 45, timed: true, timeSec: 60, tip: 'Mantenha o corpo alinhado. Não deixe o quadril subir ou cair.', timedLabel: '60 segundos', icon: '🧘' },
+          { name: 'Remada Curvada', muscle: 'Dorsais • Bíceps • Core', sets: 3, reps: 12, rest: 60, tip: 'Puxe a barra até a linha do umbigo. Mantenha as costas retas durante todo o movimento.', timed: false, icon: '🏋️' },
+          { name: 'Stiff com Barra', muscle: 'Posterior • Isquiotibiais', sets: 3, reps: 12, rest: 60, tip: 'Mantenha as pernas quase retas. Desça a barra até meio da canela.', timed: false, icon: '🦿' },
+          { name: 'Desenvolvimento Militar', muscle: 'Ombros • Tríceps', sets: 3, reps: 10, rest: 75, tip: 'Empurre a barra até a extensão total dos braços. Controle a descida.', timed: false, icon: '🏋️' },
+          { name: 'Panturrilha em Pé', muscle: 'Panturrilha', sets: 4, reps: 15, rest: 45, tip: 'Faça o movimento completo. Alongue até onde conseguir na descida.', timed: false, icon: '🦶' },
+          { name: 'Abdominal Infra', muscle: 'Abdômen inferior', sets: 3, reps: 15, rest: 45, tip: 'Movimento controlado. Não use impulso. Contrate o abdômen no topo.', timed: false, icon: '🔥' }
+        ];
+
+        let detalhe_do_treino_current = 0;
+        let detalhe_do_treino_timerInterval = null;
+        let detalhe_do_treino_timerSeconds = 0;
+        let detalhe_do_treino_timerRunning = false;
+        let detalhe_do_treino_checks = { completed: false, difficult: false };
+        let detalhe_do_treino_completedSets = new Set();
+
+        function detalhe_do_treino_render() {
+          const ex = detalhe_do_treino_exercises[detalhe_do_treino_current];
+          const total = detalhe_do_treino_exercises.length;
+          const pct = Math.round((detalhe_do_treino_current / total) * 100);
+
+          document.getElementById('detalhe-treino-progress').style.width = pct + '%';
+          document.getElementById('detalhe-treino-progress-text').textContent = 'Exercício ' + (detalhe_do_treino_current + 1) + ' de ' + total;
+          document.getElementById('detalhe-treino-progress-pct').textContent = pct + '%';
+
+          document.getElementById('detalhe-treino-exercise-name').textContent = ex.name;
+          document.getElementById('detalhe-treino-exercise-muscle').textContent = ex.muscle;
+          document.getElementById('detalhe-treino-sets').textContent = ex.sets;
+          document.getElementById('detalhe-treino-reps').textContent = ex.reps === 0 ? '—' : ex.reps;
+          document.getElementById('detalhe-treino-rest').textContent = ex.rest + 's';
+          document.getElementById('detalhe-treino-set-badge').textContent = 'Série ' + Math.min(detalhe_do_treino_current + 1, ex.sets) + '/' + ex.sets;
+          document.getElementById('detalhe-treino-tip').textContent = ex.tip;
+
+          const timerArea = document.getElementById('detalhe-treino-timer-area');
+          if (ex.timed) {
+            timerArea.classList.remove('hidden');
+            detalhe_do_treino_resetTimer();
+          } else {
+            timerArea.classList.add('hidden');
+            if (detalhe_do_treino_timerInterval) { clearInterval(detalhe_do_treino_timerInterval); detalhe_do_treino_timerInterval = null; }
+          }
+
+          document.getElementById('detalhe-treino-btn-prev').disabled = detalhe_do_treino_current === 0;
+          document.getElementById('detalhe-treino-btn-prev').classList.toggle('opacity-40', detalhe_do_treino_current === 0);
+          document.getElementById('detalhe-treino-btn-prev').classList.toggle('cursor-not-allowed', detalhe_do_treino_current === 0);
+
+          const isLast = detalhe_do_treino_current === total - 1;
+          const nextLabel = document.getElementById('detalhe-treino-next-label');
+          if (isLast) {
+            nextLabel.textContent = 'Finalizar';
+          } else {
+            nextLabel.textContent = 'Próximo';
+          }
+
+          detalhe_do_treino_checks = { completed: false, difficult: false };
+          detalhe_do_treino_updateChecks();
+        }
+
+        function detalhe_do_treino_updateChecks() {
+          ['completed', 'difficult'].forEach(key => {
+            const el = document.getElementById('detalhe-treino-check-' + key);
+            const svg = el.querySelector('svg');
+            if (detalhe_do_treino_checks[key]) {
+              el.classList.remove('border-gray-300');
+              el.classList.add('bg-marca-700', 'border-marca-700');
+              svg.classList.remove('hidden');
+            } else {
+              el.classList.add('border-gray-300');
+              el.classList.remove('bg-marca-700', 'border-marca-700');
+              svg.classList.add('hidden');
+            }
+          });
+        }
+
+        function detalhe_do_treino_toggleCheck(key) {
+          detalhe_do_treino_checks[key] = !detalhe_do_treino_checks[key];
+          detalhe_do_treino_updateChecks();
+          toast(detalhe_do_treino_checks[key] ? 'Marcado!' : 'Desmarcado', 'ok');
+        }
+
+        function detalhe_do_treino_startTimer() {
+          if (detalhe_do_treino_timerRunning) return;
+          detalhe_do_treino_timerRunning = true;
+          document.getElementById('detalhe-treino-btn-start').classList.add('hidden');
+          document.getElementById('detalhe-treino-btn-pause').classList.remove('hidden');
+          detalhe_do_treino_timerInterval = setInterval(() => {
+            detalhe_do_treino_timerSeconds++;
+            const m = String(Math.floor(detalhe_do_treino_timerSeconds / 60)).padStart(2, '0');
+            const s = String(detalhe_do_treino_timerSeconds % 60).padStart(2, '0');
+            document.getElementById('detalhe-treino-timer-display').textContent = m + ':' + s;
+          }, 1000);
+        }
+
+        function detalhe_do_treino_pauseTimer() {
+          detalhe_do_treino_timerRunning = false;
+          if (detalhe_do_treino_timerInterval) { clearInterval(detalhe_do_treino_timerInterval); detalhe_do_treino_timerInterval = null; }
+          document.getElementById('detalhe-treino-btn-start').classList.remove('hidden');
+          document.getElementById('detalhe-treino-btn-pause').classList.add('hidden');
+        }
+
+        function detalhe_do_treino_resetTimer() {
+          detalhe_do_treino_timerRunning = false;
+          if (detalhe_do_treino_timerInterval) { clearInterval(detalhe_do_treino_timerInterval); detalhe_do_treino_timerInterval = null; }
+          detalhe_do_treino_timerSeconds = 0;
+          document.getElementById('detalhe-treino-timer-display').textContent = '00:00';
+          document.getElementById('detalhe-treino-btn-start').classList.remove('hidden');
+          document.getElementById('detalhe-treino-btn-pause').classList.add('hidden');
+        }
+
+        function detalhe_do_treino_nextExercise() {
+          if (detalhe_do_treino_current < detalhe_do_treino_exercises.length - 1) {
+            detalhe_do_treino_completedSets.add(detalhe_do_treino_current);
+            detalhe_do_treino_current++;
+            detalhe_do_treino_render();
+            toast('Próximo exercício!', 'info');
+          } else {
+            detalhe_do_treino_completedSets.add(detalhe_do_treino_current);
+            detalhe_do_treino_showCompletion();
+          }
+        }
+
+        function detalhe_do_treino_prevExercise() {
+          if (detalhe_do_treino_current > 0) {
+            detalhe_do_treino_current--;
+            detalhe_do_treino_render();
+          }
+        }
+
+        function detalhe_do_treino_showCompletion() {
+          const totalExercises = detalhe_do_treino_exercises.length;
+          const completedCount = detalhe_do_treino_completedSets.size;
+          const totalSeries = detalhe_do_treino_exercises.reduce((a, e) => a + e.sets, 0);
+          const totalCals = Math.floor(Math.random() * 150) + 350;
+          const totalMin = Math.floor(Math.random() * 15) + 25;
+          const totalSec = Math.floor(Math.random() * 60);
+
+          document.getElementById('detalhe-treino-total-time').textContent = totalMin + ':' + String(totalSec).padStart(2, '0');
+          document.getElementById('detalhe-treino-total-cal').textContent = totalCals;
+          document.getElementById('detalhe-treino-total-series').textContent = completedCount + '/' + totalExercises;
+
+          document.getElementById('detalhe-treino-completion-modal').classList.remove('hidden');
+        }
+
+        function detalhe_do_treino_finish() {
+          document.getElementById('detalhe-treino-completion-modal').classList.add('hidden');
+          detalhe_do_treino_resetTimer();
+          detalhe_do_treino_current = 0;
+          detalhe_do_treino_completedSets.clear();
+          mostrarTela('painel-inicial');
+          toast('Treino salvo no histórico!', 'ok');
+        }
+
+        function detalhe_do_treino_share() {
+          toast('Conquista copiada para compartilhar!', 'ok');
+        }
+
+        function abrirChatPersonal() {
+          const html = '<div class="space-y-3"><div class="bg-marca-50 rounded-xl p-4 border border-marca-100"><div class="flex items-center gap-3 mb-2"><div class="w-10 h-10 rounded-full bg-marca-700 flex items-center justify-center text-white font-bold text-sm">RC</div><div><p class="font-semibold text-gray-900 text-sm">Prof. Ricardo Costa</p><p class="text-xs text-gray-500">Seu personal trainer</p></div></div><p class="text-sm text-gray-700">Parabéns pelo treino de hoje! 👏 Continue assim. Se precisar de alguma orientação, estou à disposição.</p><p class="text-xs text-gray-400 mt-1">há 2 minutos</p></div><div class="flex gap-2"><input type="text" placeholder="Digite sua mensagem..." class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500" onkeydown="if(event.key===\'Enter\'){toast(\'Mensagem enviada!\',\'ok\')}"><button onclick="toast(\'Mensagem enviada!\',\'ok\')" class="px-4 py-2.5 bg-marca-700 text-white rounded-xl text-sm font-semibold active:scale-95 transition-all hover:bg-marca-800">Enviar</button></div></div>';
+          abrirModal(html, 'Chat com Personal Trainer');
+        }
+
+        detalhe_do_treino_render();
+      </script>
+    </section>
+
     <!-- TELAS -->
       </main>
 
