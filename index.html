@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>FitConnect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marca: {
+              50:  '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16'
+            }
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
+          },
+          boxShadow: {
+            'app': '0 25px 60px rgba(0,0,0,0.12)',
+            'card': '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+            'card-hover': '0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)',
+            'nav': '0 -4px 20px rgba(0,0,0,0.06)',
+            'elevated': '0 8px 30px rgba(0,0,0,0.12)'
+          },
+          borderRadius: {
+            'app': '32px'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: 'DM Sans', sans-serif; background: #0f172a; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(20,83,45,0.15); border-radius: 4px; }
+    *:focus-visible { outline: 2px solid #22c55e; outline-offset: 2px; border-radius: 4px; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    [data-tela]:not(.hidden) { animation: fadeSlideIn 0.28s ease-out forwards; }
+
+    @keyframes toastIn  { from { opacity:0; transform: translateY(-16px) scale(0.96); } to { opacity:1; transform: translateY(0) scale(1); } }
+    @keyframes toastOut { from { opacity:1; transform: translateY(0) scale(1); } to { opacity:0; transform: translateY(-16px) scale(0.96); } }
+    @keyframes pulse-ring { 0% { transform: scale(0.85); opacity:.6; } 100% { transform: scale(1.25); opacity:0; } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    .badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:9999px; font-size:0.7rem; font-weight:600; letter-spacing:0.01em; line-height:1.4; white-space:nowrap; font-family:'DM Sans',sans-serif; }
+    .badge-verde { background:#dcfce7; color:#15803d; }
+    .badge-azul  { background:#dbeafe; color:#1e40af; }
+    .badge-amarelo { background:#fef9c3; color:#a16207; }
+    .badge-vermelho { background:#fee2e2; color:#b91c1c; }
+    .badge-cinza { background:#f1f5f9; color:#475569; }
+
+    .card { background:#fff; border-radius:16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04); overflow:hidden; transition: box-shadow 0.2s ease, transform 0.2s ease; }
+    .card:active { transform: scale(0.985); }
+    .card-interativa:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04); }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 24px; border-radius:14px; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.95rem; border:none; cursor:pointer; transition: all 0.2s ease; position:relative; overflow:hidden; letter-spacing:0.01em; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primario { background: linear-gradient(135deg, #15803d, #22c55e); color:#fff; box-shadow: 0 4px 14px rgba(34,197,94,0.35); }
+    .btn-primario:hover { box-shadow: 0 6px 20px rgba(34,197,94,0.45); }
+    .btn-secundario { background:#f0fdf4; color:#15803d; border:1.5px solid #bbf7d0; }
+    .btn-secundario:hover { background:#dcfce7; }
+    .btn-contorno { background:transparent; color:#14532d; border:1.5px solid #e2e8f0; }
+    .btn-contorno:hover { border-color:#22c55e; color:#15803d; background:#f0fdf4; }
+    .btn-perigo { background:#fef2f2; color:#b91c1c; border:1.5px solid #fecaca; }
+    .btn-pequeno { padding:8px 16px; font-size:0.8rem; border-radius:10px; }
+    .btn-bloco { width:100%; }
+
+    .nav-item { display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0; flex:1; cursor:pointer; transition: all 0.2s ease; position:relative; border:none; background:none; font-family:'DM Sans',sans-serif; -webkit-tap-highlight-color:transparent; }
+    .nav-item span { font-size:0.65rem; font-weight:500; color:#94a3b8; transition: color 0.2s ease; }
+    .nav-item svg { transition: all 0.2s ease; color:#94a3b8; }
+    .nav-item.ativo span { color:#15803d; font-weight:700; }
+    .nav-item.ativo svg { color:#22c55e; }
+    .nav-item.ativo::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:24px; height:3px; background:linear-gradient(90deg,#15803d,#22c55e); border-radius:0 0 3px 3px; }
+    .nav-item:active { transform:scale(0.92); }
+
+    #toast-container { position:fixed; top:12px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; pointer-events:none; width:min(360px, calc(100% - 24px)); }
+    .toast-item { padding:12px 16px; border-radius:14px; font-size:0.85rem; font-weight:500; display:flex; align-items:center; gap:10px; box-shadow:0 8px 30px rgba(0,0,0,0.15); pointer-events:auto; font-family:'DM Sans',sans-serif; }
+    .toast-ok    { background:#14532d; color:#f0fdf4; }
+    .toast-erro  { background:#991b1b; color:#fef2f2; }
+    .toast-info  { background:#1e3a5f; color:#eff6ff; }
+
+    #modal-overlay { position:fixed; inset:0; z-index:8000; background:rgba(15,23,42,0.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.25s ease; }
+    #modal-overlay.aberto { opacity:1; pointer-events:auto; }
+    #modal-overlay.aberto #modal-card { transform: translateY(0); }
+    #modal-card { background:#fff; border-radius:24px 24px 0 0; width:min(390px,100%); max-height:80vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.32,0.72,0,1); box-shadow:0 -8px 40px rgba(0,0,0,0.15); }
+    #modal-card-header { padding:16px 20px 8px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+    #modal-card-body { padding:0 20px 24px; overflow-y:auto; flex:1; }
+
+    .phone-frame { background:#1e293b; border-radius:40px; padding:12px; box-shadow:0 25px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05); }
+    @media (max-width:430px) { .phone-frame { border-radius:0; padding:0; box-shadow:none; } }
+
+    .avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; font-weight:700; font-size:1rem; color:#fff; flex-shrink:0; }
+  </style>
+</head>
+<body class="bg-slate-900 flex items-center justify-center min-h-screen">
+
+  <!-- Tela Desktop: Moldura de Celular -->
+  <div class="phone-frame w-full max-w-[400px] mx-auto h-[100dvh] max-h-[850px] flex flex-col relative overflow-hidden">
+    <div class="flex flex-col h-full bg-marca-50">
+
+      <!-- Barra de Status -->
+      <div class="flex items-center justify-between px-7 pt-3 pb-1 bg-white/80 backdrop-blur-md flex-shrink-0 z-50">
+        <span id="clock" class="font-display font-bold text-sm text-slate-800"></span>
+        <div class="flex items-center gap-1.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="text-slate-600"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-slate-600"><rect x="1" y="6" width="4" height="12" rx="1"/><rect x="7" y="4" width="4" height="14" rx="1"/><rect x="13" y="2" width="4" height="16" rx="1"/><rect x="19" y="0" width="4" height="18" rx="1"/></svg>
+          <svg width="24" height="12" viewBox="0 0 24 12" fill="none" class="text-slate-600"><rect x="0" y="1" width="21" height="10" rx="2.5" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="3" width="16" height="6" rx="1" fill="currentColor"/><path d="M22 4.5v3a1.5 1.5 0 000-3z" fill="currentColor" opacity="0.4"/></svg>
+        </div>
+      </div>
+
+      <!-- Área das Telas -->
+      <main class="flex-1 overflow-y-auto overflow-x-hidden relative" id="app-main">
+        <!-- TELAS -->
+      </main>
+
+      <!-- Navegação Inferior -->
+      <nav class="bg-white border-t border-slate-100 px-2 pb-[max(6px,env(safe-area-inset-bottom))] flex-shrink-0 z-50" style="box-shadow:0 -4px 20px rgba(0,0,0,0.05);" id="nav-bar">
+        <button data-nav="painel-inicial" onclick="mostrarTela('painel-inicial')" class="nav-item ativo" aria-label="Painel Inicial">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Início</span>
+        </button>
+        <button data-nav="meus-treinos" onclick="mostrarTela('meus-treinos')" class="nav-item" aria-label="Meus Treinos">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11v11h-11z"/><path d="M6.5 6.5L4 4M17.5 6.5L20 4M6.5 17.5L4 20M17.5 17.5L20 20"/></svg>
+          <span>Treinos</span>
+        </button>
+        <button data-nav="telemedicina" onclick="mostrarTela('telemedicina')" class="nav-item" aria-label="Telemedicina">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Telemed</span>
+        </button>
+        <button data-nav="marketplace" onclick="mostrarTela('marketplace')" class="nav-item" aria-label="Marketplace">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+          <span>Loja</span>
+        </button>
+        <button data-nav="meu-perfil" onclick="mostrarTela('meu-perfil')" class="nav-item" aria-label="Meu Perfil">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Perfil</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-card">
+      <div id="modal-card-header">
+        <h3 id="modal-title" class="font-display font-bold text-lg text-slate-800"></h3>
+        <button onclick="fecharModal()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors" aria-label="Fechar modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="text-slate-400"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="modal-card-body"></div>
+    </div>
+  </div>
+
+  <script>
+    // ─── CLOCK ───
+    function atualizarRelogio() {
+      const agora = new Date();
+      const h = String(agora.getHours()).padStart(2,'0');
+      const m = String(agora.getMinutes()).padStart(2,'0');
+      document.getElementById('clock').textContent = h + ':' + m;
+    }
+    atualizarRelogio();
+    setInterval(atualizarRelogio, 30000);
+
+    // ─── TOAST ───
+    function toast(mensagem, tipo) {
+      tipo = tipo || 'info';
+      var container = document.getElementById('toast-container');
+      var el = document.createElement('div');
+      var icones = { ok: '✓', erro: '✕', info: 'ℹ' };
+      el.className = 'toast-item toast-' + tipo;
+      el.style.animation = 'toastIn 0.3s ease forwards';
+      el.innerHTML = '<span style="font-weight:700;font-size:1rem;">' + icones[tipo] + '</span><span>' + mensagem + '</span>';
+      container.appendChild(el);
+      setTimeout(function() {
+        el.style.animation = 'toastOut 0.25s ease forwards';
+        setTimeout(function() { el.remove(); }, 250);
+      }, 3000);
+    }
+
+    // ─── MODAL ───
+    function abrirModal(html, titulo) {
+      document.getElementById('modal-title').textContent = titulo || '';
+      document.getElementById('modal-card-body').innerHTML = html;
+      var overlay = document.getElementById('modal-overlay');
+      overlay.classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+    function fecharModal() {
+      var overlay = document.getElementById('modal-overlay');
+      overlay.classList.remove('aberto');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) fecharModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') fecharModal();
+    });
+
+    // ─── UTILITÁRIOS DE FORMATAÇÃO ───
+    function brl(valor) {
+      return 'R$ ' + Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function dataBR(iso) {
+      if (!iso) return '—';
+      var d = new Date(iso + 'T00:00:00');
+      return String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+    }
+
+    // ─── ROTEADOR ───
+    function mostrarTela(id) {
+      document.querySelectorAll('[data-tela]').forEach(function(s) {
+        s.classList.toggle('hidden', s.dataset.tela !== id);
+      });
+      document.querySelectorAll('[data-nav]').forEach(function(b) {
+        b.classList.toggle('ativo', b.dataset.nav === id);
+      });
+      window.scrollTo({ top: 0 });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      mostrarTela('painel-inicial');
+    });
+  </script>
+</body>
+</html>
